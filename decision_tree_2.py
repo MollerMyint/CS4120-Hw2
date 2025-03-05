@@ -59,7 +59,14 @@ for ds in dataSets:
        clf = clf.fit(X, Y)
 
        # Simulate reading the test data (since we don't have the test file)
-       dbTest = dbTraining  # Using training data as a proxy for test data
+       dbTest = dbTraining
+
+       dbTest = []
+       with open('contact_lens_test.csv', 'r') as testfile:  # Change file name as needed
+        test_reader = csv.reader(testfile)
+        for j, row in enumerate(test_reader):
+          if j > 0:  # Skip header
+            dbTest.append(row)
 
        correct_predictions = 0
        for data in dbTest:
@@ -88,6 +95,3 @@ for ds in dataSets:
     #Print the average accuracy of this model during the 10 runs (training and test set).
     #Your output should be something like that: final accuracy when training on contact_lens_training_1.csv: 0.2
     print(f'final accuracy when training on {ds}: {avg_accuracy:.2f}')
-
-
-
